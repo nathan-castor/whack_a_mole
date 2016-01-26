@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Whack a Mole</title>
+
+    <style media="screen">
+      div{
+        border: 1px solid black;
+        /*display:inline-block;*/
+        position:relative;
+        float:left;
+        min-width:8px;
+        min-height:15px;
+      }
+      .hole{
+        width: 100px;
+        height: 100px;
+        display: inline-block;
+        vertical-align: top;
+      }
+      .mole{
+        width: 100px;
+        height: 100px;
+      }
+      img{
+        border-radius: 50px;
+        display: block;
+        vertical-align: middle;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    </style>
+
+  </head>
+  <body>
+    <div class="scoreboard">
+      score:
+    </div>
+    <div class="score">
+
+    </div>
+    <div class="container">
+      <div class="hole"><img src="mole.jpg" class="mole" alt="" /></div>
+      <div class="hole"></div>
+      <div class="hole"></div>
+      <div class="hole"></div>
+      <br>
+      <div class="hole"></div>
+      <div class="hole"></div>
+      <div class="hole"></div>
+      <div class="hole"></div>
+      <br>
+      <div class="hole"></div>
+      <div class="hole"></div>
+      <div class="hole"></div>
+      <div class="hole"></div>
+    </div>
+    <button class="start" onclick="gameInit()">Start Game</button>
+    <script type="text/javascript">
+      var score = 0
+      var scoreBox = document.querySelector('.score')
+      var holesArray = document.querySelectorAll('.hole')
+      var moleIMG = '<img src="mole.jpg" class="mole" alt="" />'
+
+      function gameInit() {
+        setInterval(moveMole, 1000)
+        var i = 0
+        while (i<holesArray.length) {
+          holesArray[i].addEventListener('mouseover', hitMole)
+          i++
+        }
+      }
+      function moveMole(){
+        for (var i = 0; i < holesArray.length; i++) {
+          holesArray[i].innerHTML = ''
+        }
+        setHole()
+      }
+
+      function setHole(){
+        var nextHole = Math.floor(Math.random()*12)
+        console.log(nextHole);
+        holesArray[nextHole].innerHTML = moleIMG
+      }
+      function hitMole() {
+        console.log(this);
+        if (this.innerHTML != '') {
+          this.innerHTML = ''
+          score++
+          setHole()
+          scoreBox.innerText = score.toString()
+        }
+      }
+    </script>
+  </body>
+</html>
